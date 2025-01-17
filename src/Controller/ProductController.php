@@ -25,17 +25,22 @@ final class ProductController extends AbstractController{
     }
 
     #[Route('/product/{id}', name: 'product_show')]
-public function show(int $id, ProductRepository $productRepository)
-{
-    $product = $productRepository->find($id);
-
-    if (!$product) {
-        throw $this->createNotFoundException('Le produit demandé n\'existe pas.');
+    public function show(int $id, ProductRepository $productRepository): Response
+    {
+        // Récupérer le produit avec les tailles associées
+        $product = $productRepository->find($id);
+    
+        if (!$product) {
+            throw $this->createNotFoundException('Le produit demandé n\'existe pas.');
+        }
+    
+        // Extraire les stocks pour les tailles
+        $stocks = $product->getStocks();
+    
+        return $this->render('product/show.html.twig', [
+            'product' => $product,
+            'stocks' => $stocks,
+        ]);
     }
-
-    return $this->render('product/show.html.twig', [
-        'product' => $product,
-    ]);
-}
 
 }

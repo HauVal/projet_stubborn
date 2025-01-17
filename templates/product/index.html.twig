@@ -4,9 +4,20 @@
 
 {% block body %}
 <div class="container">
-    <a href="/" class="btn btn-primary mb-3">Retour à l'accueil</a>
-    
-    <h1>Boutique</h1>
+
+    <header>
+        <div class="logo">
+            <img src="{{ asset('images/Logo.png') }}" alt="Logo">
+            <p>Don't compromise on your look</p>
+        </div>
+        
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/products" class="select">Boutique</a>
+            <a href="/cart">Panier</a>
+            <a href="/logout" class="logout">Se déconnecter</a>
+        </nav>
+    </header>
 
     <!-- Filtre par fourchette de prix -->
     <form method="get" action="{{ path('product_list') }}" class="mb-4">
@@ -36,5 +47,12 @@
             <p>Aucun produit trouvé pour cette fourchette de prix.</p>
         {% endfor %}
     </div>
+
+    <footer>
+        <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>
+        <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
+        <a href="mailto:stubborn@blabla.com">stubborn@blabla.com</a>
+    </footer>
+
 </div>
 {% endblock %}
