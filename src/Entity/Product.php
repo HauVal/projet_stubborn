@@ -21,6 +21,9 @@ class Product
     #[ORM\Column]
     private ?float $price = null;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $image = null;
+
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductStock::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $stocks;
 
@@ -56,6 +59,18 @@ class Product
     {
         $this->price = $price;
 
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+    
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+    
         return $this;
     }
 
