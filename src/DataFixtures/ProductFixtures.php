@@ -15,7 +15,7 @@ class ProductFixtures extends Fixture
             [
                 'name' => 'Blackbelt',
                 'price' => 29.90,
-                'image' => '1.png',
+                'image' => '1.jpeg',
                 'highlight' => true,
                 'stocks' => [
                     'XS' => 2,
@@ -28,7 +28,7 @@ class ProductFixtures extends Fixture
             [
                 'name' => 'BlueBelt',
                 'price' => 29.90,
-                'image' => '2.png',
+                'image' => '2.jpeg',
                 'highlight' => false,
                 'stocks' => [
                     'XS' => 2,
@@ -41,7 +41,7 @@ class ProductFixtures extends Fixture
             [
                 'name' => 'Street',
                 'price' => 34.50,
-                'image' => '3.png',
+                'image' => '3.jpeg',
                 'highlight' => false,
                 'stocks' => [
                     'XS' => 2,
@@ -54,7 +54,7 @@ class ProductFixtures extends Fixture
             [
                 'name' => 'Pokeball',
                 'price' => 45.00,
-                'image' => '4.png',
+                'image' => '4.jpeg',
                 'highlight' => true,
                 'stocks' => [
                     'XS' => 2,
@@ -68,7 +68,7 @@ class ProductFixtures extends Fixture
             [
                 'name' => 'PinkLady',
                 'price' => 29.90,
-                'image' => '5.png',
+                'image' => '5.jpeg',
                 'highlight' => true,
                 'stocks' => [
                     'XS' => 2,
@@ -82,7 +82,7 @@ class ProductFixtures extends Fixture
             [
                 'name' => 'Snow',
                 'price' => 32.00,
-                'image' => '6.png',
+                'image' => '6.jpeg',
                 'highlight' => true,
                 'stocks' => [
                     'XS' => 2,
@@ -96,7 +96,7 @@ class ProductFixtures extends Fixture
             [
                 'name' => 'Greyback',
                 'price' => 28.50,
-                'image' => '7.png',
+                'image' => '7.jpeg',
                 'highlight' => true,
                 'stocks' => [
                     'XS' => 2,
@@ -110,7 +110,7 @@ class ProductFixtures extends Fixture
             [
                 'name' => 'BLueCloud',
                 'price' => 45.00,
-                'image' => '8.png',
+                'image' => '8.jpeg',
                 'highlight' => true,
                 'stocks' => [
                     'XS' => 2,
@@ -124,7 +124,7 @@ class ProductFixtures extends Fixture
             [
                 'name' => 'BornInUsa',
                 'price' => 59.90,
-                'image' => '9.png',
+                'image' => '9.jpeg',
                 'highlight' => true,
                 'stocks' => [
                     'XS' => 2,
@@ -138,7 +138,7 @@ class ProductFixtures extends Fixture
             [
                 'name' => 'GreenSchool',
                 'price' => 42.20,
-                'image' => '10.png',
+                'image' => '10.jpeg',
                 'highlight' => true,
                 'stocks' => [
                     'XS' => 2,
