@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Boutique - Liste des produits{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -13,25 +13,42 @@
         
         <nav>
             <a href="/">Accueil</a>
-            <a href="/products" class="select">Boutique</a>
-            <a href="/cart">Panier</a>
-            <a href="/logout" class="logout">Se déconnecter</a>
+            {% if app.user %}
+                <span>Bonjour, {{ app.user.name }} !</span>
+                <a href="/logout">Se déconnecter</a>
+            {% else %}
+                <a href="/login">Se connecter</a>
+                <a href="/register">S'inscrire</a>
+            {% endif %}
         </nav>
     </header>
 
-<h1>Connexion</h1>
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
-<form action="{{ path('login') }}" method="post">
-    <label for="username">Email :</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" required>
+    <div style="text-align: center; margin-top: 50px;">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
 
-    <label for="password">Mot de passe :</label>
-    <input type="password" id="password" name="_password" required>
+        <h1>Se connecter</h1>
+        
+        <form method="post" action="{{ path('login') }}">
+            {% if error %}
+                <div style="color: red;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
 
-    <button type="submit">Se connecter</button>
-</form>
+            <label for="username">Nom utilisateur :</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" required autofocus>
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="_password" required>
+
+            <button type="submit" style="background-color: blue; color: white;">Se connecter</button>
+        </form>
+
+        <div style="margin-top: 20px;">
+            <a href="/">Retour à l'accueil</a><br>
+            <a href="/register">Pas encore inscrit ?</a>
+        </div>
+    </div>
 
     <footer>
         <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>
