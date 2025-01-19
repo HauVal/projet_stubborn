@@ -24,6 +24,9 @@ class Product
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $highlight = false;
+
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductStock::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $stocks;
 
@@ -70,6 +73,18 @@ class Product
     public function setImage(?string $image): self
     {
         $this->image = $image;
+    
+        return $this;
+    }
+
+    public function getHighlight(): ?bool
+    {
+        return $this->highlight;
+    }
+    
+    public function setHighlight(bool $highlight): self
+    {
+        $this->highlight = $highlight;
     
         return $this;
     }

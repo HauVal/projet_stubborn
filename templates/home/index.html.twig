@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <header>
+        <nav>
+            <ul>
+                {% if app.user %}
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/products">Boutique</a></li>
+                    <li><a href="/cart">Panier</a></li>
+                    <li><a href="/logout">Se déconnecter</a></li>
+                {% else %}
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/login">Se connecter</a></li>
+                    <li><a href="/register">S'inscrire</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Nos produits mis en avant</h1>
+        <div class="products">
+            {% for product in products %}
+                <div class="product">
+                    <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
+                    <h2>{{ product.name }}</h2>
+                    <p>Prix : {{ product.price }} €</p>
+                    <a href="{{ path('product_show', {'id': product.id}) }}">Voir</a>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <p>Informations de la société</p>
+    </footer>
+{% endblock %}

@@ -156,6 +156,7 @@ class ProductFixtures extends Fixture
             $product->setName($productData['name']);
             $product->setPrice($productData['price']);
             $product->setImage($productData['image']);
+            $product->setHighlight($productData['highlight']);
 
             foreach ($productData['stocks'] as $size => $quantity) {
                 $productStock = new ProductStock();
