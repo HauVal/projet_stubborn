@@ -3,22 +3,31 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <header>
-        <nav>
-            <ul>
-                {% if app.user %}
-                    <li><a href="/">Accueil</a></li>
-                    <li><a href="/products">Boutique</a></li>
-                    <li><a href="/cart">Panier</a></li>
-                    <li><a href="/logout">Se déconnecter</a></li>
-                {% else %}
-                    <li><a href="/">Accueil</a></li>
-                    <li><a href="/login">Se connecter</a></li>
-                    <li><a href="/register">S'inscrire</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </header>
+
+<link rel="stylesheet" href="{{ asset('css/home.css') }}">
+
+<header>
+    <div class="logo">
+        <img src="{{ asset('images/Logo.png') }}" alt="Logo">
+        <p>Don't compromise on your look</p>
+    </div>
+
+    <nav>
+        {% if app.user %}
+            <a href="/" class="select">Accueil</a></li>
+            <a href="/products">Boutique</a></li>
+            <a href="/cart">Panier</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="/admin">Back-office</a>
+            {% endif %}
+            <a href="/logout" class="logout">Se déconnecter</a></li>
+        {% else %}
+            <a href="/">Accueil</a></li>
+            <a href="/login">Se connecter</a></li>
+            <a href="/register">S'inscrire</a></li>
+        {% endif %}
+    </nav>
+</header>
 
     <main>
         <h1>Nos produits mis en avant</h1>
