@@ -28,7 +28,9 @@
                     <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
                     <h2>{{ product.name }}</h2>
                     <p>Prix : {{ product.price }} €</p>
-                    <a href="{{ path('product_show', {'id': product.id}) }}">Voir</a>
+                    {% if app.user %}
+                        <a href="{{ path('product_show', {'id': product.id}) }}">Voir</a>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
