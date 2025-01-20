@@ -35,7 +35,8 @@ class AdminController extends AbstractController
             foreach (['XS', 'S', 'M', 'L', 'XL'] as $size) {
                 $stock = new ProductStock();
                 $stock->setSize($size);
-                $stock->setQuantity(0); // Stock initial
+                $quantity = $formData['stock_' . $size] ?? 0;
+                $stock->setQuantity((int)$quantity);
                 $product->addStock($stock);
             }
     

@@ -18,10 +18,37 @@
         <section>
             <h2>Ajouter un produit</h2>
             {{ form_start(form) }}
-                {{ form_widget(form) }}
+                {{ form_widget(form.name) }}
+                {{ form_widget(form.price) }}
+                {{ form_widget(form.image) }}
+                {{ form_widget(form.highlight) }}
+                
+                <h3>Quantités de stock</h3>
+                <div>
+                    <label for="stock_XS">XS</label>
+                    <input type="number" name="stocks[0]" id="stock_XS" value="0">
+                </div>
+                <div>
+                    <label for="stock_S">S</label>
+                    <input type="number" name="stocks[1]" id="stock_S" value="0">
+                </div>
+                <div>
+                    <label for="stock_M">M</label>
+                    <input type="number" name="stocks[2]" id="stock_M" value="0">
+                </div>
+                <div>
+                    <label for="stock_L">L</label>
+                    <input type="number" name="stocks[3]" id="stock_L" value="0">
+                </div>
+                <div>
+                    <label for="stock_XL">XL</label>
+                    <input type="number" name="stocks[4]" id="stock_XL" value="0">
+                </div>
+
                 <button type="submit">Ajouter</button>
             {{ form_end(form) }}
         </section>
+
 
         <section>
             <h2>Liste des produits</h2>
