@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Back-Office{% endblock %}
+
+{% block body %}
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/product">Boutique</a></li>
+                <li><a href="/logout">Se déconnecter</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Back-Office</h1>
+
+        <section>
+            <h2>Ajouter un produit</h2>
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button type="submit">Ajouter</button>
+            {{ form_end(form) }}
+        </section>
+
+        <section>
+            <h2>Liste des produits</h2>
+            <div class="products">
+                {% for product in products %}
+                    <form method="post" action="{{ path('admin_delete', {id: product.id}) }}">
+                        <div class="product">
+                            <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
+                            
+                            <input type="text" name="name" value="{{ product.name }}" />
+                            <input type="number" name="price" value="{{ product.price }}" />
+                            
+                            {% for stock in product.stocks %}
+                                <div>
+                                    <label>{{ stock.size }}</label>
+                                    <input type="number" name="stock_{{ stock.size }}" value="{{ stock.quantity }}" />
+                                </div>
+                            {% endfor %}
+                            
+                            <label>
+                                Mettre en avant
+                                <input type="checkbox" name="highlight" {% if product.highlight %}checked{% endif %}>
+                            </label>
+                            
+                            <button type="submit" name="_method" value="delete">Supprimer</button>
+                            <button type="submit" formaction="{{ path('admin_update', {id: product.id}) }}">Modifier</button>
+                        </div>
+                    </form>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Informations de la société</p>
+    </footer>
+{% endblock %}
