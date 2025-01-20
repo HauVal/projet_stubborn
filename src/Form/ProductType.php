@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\File;
 
 class ProductType extends AbstractType
 {
@@ -28,14 +29,20 @@ class ProductType extends AbstractType
                 'required' => false,
             ])
 
-            ->add('stocks', CollectionType::class, [
-                'entry_type' => NumberType::class,
-                'entry_options' => [
-                    'label' => false,
+            ->add('image', FileType::class, [
+                'label' => 'Image du produit (JPEG/PNG)',
+                'mapped' => false, // Ce champ n'est pas directement lié à l'entité
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '2M',
+                        'mimeTypes' => ['image/jpeg', 'image/png'],
+                        'mimeTypesMessage' => 'Veuillez uploader une image valide (JPEG ou PNG).',
+                    ]),
                 ],
-                'allow_add' => true,
-                'mapped' => false,
             ]);
+
+
     }
     
     public function configureOptions(OptionsResolver $resolver): void

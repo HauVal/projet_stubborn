@@ -10,6 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -22,7 +24,6 @@ class AdminController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager
     ): Response {
-        // Liste de tous les produits
         $products = $productRepository->findAll();
     
         // Gestion du formulaire d'ajout
@@ -39,6 +40,29 @@ class AdminController extends AbstractController
                 $stock->setQuantity((int)$quantity);
                 $product->addStock($stock);
             }
+
+             // Gestion de l'upload de l'image
+        /** @var UploadedFile $imageFile */
+        $imageFile = $form->get('image')->getData();
+
+        if ($imageFile) {
+            // Créez un nom unique pour l'image
+            $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+
+            try {
+                // Déplacez l'image dans le répertoire public/imagesProduits
+                $imageFile->move(
+                    $this->getParameter('product_images_directory'),
+                    $newFilename
+                );
+
+                // Sauvegardez le nom du fichier dans l'entité
+                $product->setImage($newFilename);
+            } catch (FileException $e) {
+                $this->addFlash('error', 'Une erreur est survenue lors de l\'upload de l\'image.');
+                return $this->redirectToRoute('admin_index');
+            }
+        }
     
             $entityManager->persist($product);
             $entityManager->flush();
