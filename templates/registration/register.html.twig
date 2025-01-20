@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <header>
+        <div class="logo">
+            <img src="{{ asset('images/Logo.png') }}" alt="Logo">
+            <p>Don't compromise on your look</p>
+        </div>
+        
+        <nav>
+            <a href="/">Accueil</a>
+            {% if app.user %}
+                <span>Bonjour, {{ app.user.name }} !</span>
+                <a href="/logout">Se déconnecter</a>
+            {% else %}
+                <a href="/login">Se connecter</a>
+                <a href="/register">S'inscrire</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <div style="text-align: center; margin-top: 50px;">
+        <h1>Inscription</h1>
+        <form method="post" action="{{ path('app_register') }}">
+            {{ form_start(registrationForm) }}
+
+            <label for="registration_form_name">Nom utilisateur :</label>
+            {{ form_widget(registrationForm.name) }}
+
+            <label for="registration_form_email">Adresse mail :</label>
+            {{ form_widget(registrationForm.email) }}
+
+            <label for="registration_form_deliveryAddress">Adresse de livraison :</label>
+            {{ form_widget(registrationForm.deliveryAddress) }}
+
+            <label for="registration_form_plainPassword">Mot de passe :</label>
+            {{ form_widget(registrationForm.plainPassword.first) }}
+
+            <label for="registration_form_plainPassword_confirmation">Confirmation de mot de passe :</label>
+            {{ form_widget(registrationForm.plainPassword.second) }}
+
+            <button type="submit" style="background-color: blue; color: white;">S'inscrire</button>
+
+            {{ form_end(registrationForm) }}
+            
+        </form>
+
+        <div style="margin-top: 20px;">
+            <a href="{{ path('login') }}">Déjà inscrit ?</a>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>
+        <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
+        <a href="mailto:stubborn@blabla.com">stubborn@blabla.com</a>
+    </footer>
+
+</div>
+{% endblock %}

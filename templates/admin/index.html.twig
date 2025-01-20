@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Back-Office{% endblock %}
+
+{% block body %}
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/product">Boutique</a></li>
+                <li><a href="/logout">Se déconnecter</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Back-Office</h1>
+
+        <section>
+            <h2>Ajouter un produit</h2>
+            {{ form_start(form) }}
+                <div>
+                    <label>Nom</label>
+                    {{ form_widget(form.name) }}
+                </div>
+
+                <div>
+                    <label>Prix</label>
+                    {{ form_widget(form.price) }}
+                </div>
+
+                <div>
+                    <label>Choisir une image</label>
+                    {{ form_widget(form.image) }}
+                </div>
+
+                <div>
+                    <label>Mettre en avant le produit ?</label>
+                    {{ form_widget(form.highlight) }}
+                </div>
+
+                <div>
+                    <label for="stock_XS">Stock XS</label>
+                    <input type="number" name="stocks[0]" id="stock_XS" value="0">
+                </div>
+                <div>
+                    <label for="stock_S">Stock S</label>
+                    <input type="number" name="stocks[1]" id="stock_S" value="0">
+                </div>
+                <div>
+                    <label for="stock_M">Stock M</label>
+                    <input type="number" name="stocks[2]" id="stock_M" value="0">
+                </div>
+                <div>
+                    <label for="stock_L">Stock L</label>
+                    <input type="number" name="stocks[3]" id="stock_L" value="0">
+                </div>
+                <div>
+                    <label for="stock_XL">Stock XL</label>
+                    <input type="number" name="stocks[4]" id="stock_XL" value="0">
+                </div>
+
+                <button type="submit">Ajouter</button>
+            {{ form_end(form) }}
+        </section>
+
+
+        <section>
+            <h2>Liste des produits</h2>
+            <div class="products">
+                {% for product in products %}
+                    <form method="post" action="{{ path('admin_delete', {id: product.id}) }}">
+                        <div class="product">
+                            <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
+                            
+                            <input type="text" name="name" value="{{ product.name }}" />
+                            <input type="number" name="price" value="{{ product.price }}" />
+                            
+                            {% for stock in product.stocks %}
+                                <div>
+                                    <label>{{ stock.size }}</label>
+                                    <input type="number" name="stock_{{ stock.size }}" value="{{ stock.quantity }}" />
+                                </div>
+                            {% endfor %}
+                            
+                            <label>
+                                Mettre en avant
+                                <input type="checkbox" name="highlight" {% if product.highlight %}checked{% endif %}>
+                            </label>
+                            
+                            <button type="submit" name="_method" value="delete">Supprimer</button>
+                            <button type="submit" formaction="{{ path('admin_update', {id: product.id}) }}">Modifier</button>
+                        </div>
+                    </form>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Informations de la société</p>
+    </footer>
+{% endblock %}

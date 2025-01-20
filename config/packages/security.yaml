@@ -2,16 +2,34 @@ security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: name
+        # used to reload user from session & other features (e.g. switch_user)
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             lazy: true
-            provider: users_in_memory
+            provider: app_user_provider
+            form_login:
+                login_path: /login
+                check_path: /login
+                enable_csrf: true
+                default_target_path: /
+                username_parameter: _username
+                password_parameter: _password
+            logout:
+                path: /logout
+                target: /login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -22,8 +40,11 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/products, roles: ROLE_USER}
+        - { path: ^/product/, roles: ROLE_USER}
+        - { path: ^/cart, roles: ROLE_USER}
 
 when@test:
     security:
@@ -37,3 +58,6 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+
+parameters:
+    product_images_directory: '%kernel.project_dir%/public/imagesProduits'
