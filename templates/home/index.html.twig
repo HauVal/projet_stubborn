@@ -29,23 +29,22 @@
     </nav>
 </header>
 
-    <main>
-        <h1>Nos produits mis en avant</h1>
-        <div class="products">
-            {% for product in products %}
-                <div class="product">
-                    <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
-                    <h2>{{ product.name }}</h2>
-                    <p>Prix : {{ product.price }} €</p>
-                    {% if app.user %}
-                        <a href="{{ path('product_show', {'id': product.id}) }}">Voir</a>
-                    {% endif %}
-                </div>
-            {% endfor %}
+<main>
+    {% for product in products %}
+        <div class="product">
+            <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
+            <h2>{{ product.name }}</h2>
+            <p>Prix : {{ product.price }} €</p>
+            {% if app.user %}
+                <a href="{{ path('product_show', {'id': product.id}) }}">Voir</a>
+            {% endif %}
         </div>
-    </main>
+    {% endfor %}
+</main>
 
     <footer>
-        <p>Informations de la société</p>
+        <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>
+        <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
+        <a href="mailto:stubborn@blabla.com">stubborn@blabla.com</a>
     </footer>
 {% endblock %}

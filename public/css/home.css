@@ -32,3 +32,19 @@ a:hover {
 .logout {
     margin-left: 50px;
 }
+
+main {
+    margin: 30px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.product {
+    border-style: solid;
+    padding: 30px;
+}
+
+footer {
+    border-style: solid;
+    padding: 20px;
+}
