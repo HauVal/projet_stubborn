@@ -1,0 +1,68 @@
+h1 {
+    padding: 10px;
+    border-style: solid;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+.formAdd {
+    background-color: rgba(255, 0, 0, 0.137);
+    margin: 20px;
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+}
+
+.formUpdate {
+    margin: 20px;
+    border-style: solid;
+    display: flex;
+}
+
+.fieldsTop {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fieldsBottom {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.fieldImage {
+    width: 200px;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.field {
+    width: 100px;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.fieldHighlight {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+form img {
+    width: 200px;
+}
+
+button {
+    margin: 10px;
+}

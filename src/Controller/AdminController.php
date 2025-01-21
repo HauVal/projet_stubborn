@@ -32,7 +32,6 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            // Créez des stocks par défaut pour chaque taille
             foreach (['XS', 'S', 'M', 'L', 'XL'] as $size) {
                 $stock = new ProductStock();
                 $stock->setSize($size);
@@ -88,6 +87,7 @@ class AdminController extends AbstractController
         $product->setName($data['name']);
         $product->setPrice($data['price']);
         $product->setHighlight(isset($data['highlight']));
+        
     
         foreach ($product->getStocks() as $stock) {
             if (isset($data['stock_' . $stock->getSize()])) {

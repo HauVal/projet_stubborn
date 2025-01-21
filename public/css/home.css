@@ -1,50 +1,10 @@
-header {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    border-bottom-style: solid;
-}
-
-.logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-header img {
-    width: 150px;
-}
-
-.select {
-    font-weight: 900;
-    text-decoration: underline;
-}
-
-a {
-    text-decoration: none;
-    margin: 10px;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.logout {
-    margin-left: 50px;
-}
-
 main {
     margin: 30px;
     display: flex;
     justify-content: space-around;
 }
 
-.product {
+.products {
     border-style: solid;
     padding: 30px;
-}
-
-footer {
-    border-style: solid;
-    padding: 20px;
 }

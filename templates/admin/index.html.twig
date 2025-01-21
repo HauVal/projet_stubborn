@@ -3,100 +3,125 @@
 {% block title %}Back-Office{% endblock %}
 
 {% block body %}
+
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+
     <header>
+        <div class="logo">
+            <img src="{{ asset('images/Logo.png') }}" alt="Logo">
+            <p>Don't compromise on your look</p>
+        </div>
+
+        <div class="title">
+            <h1>Back-Office</h1>
+        </div>
+
         <nav>
-            <ul>
-                <li><a href="/product">Boutique</a></li>
-                <li><a href="/logout">Se déconnecter</a></li>
-            </ul>
+            <a href="/product">Boutique</a></li>
+            <a href="/logout">Se déconnecter</a></li> 
         </nav>
     </header>
 
     <main>
-        <h1>Back-Office</h1>
+        <div>
+            <form class="formAdd">
+                {{ form_start(form) }}
 
-        <section>
-            <h2>Ajouter un produit</h2>
-            {{ form_start(form) }}
-                <div>
-                    <label>Nom</label>
-                    {{ form_widget(form.name) }}
-                </div>
+                    <div class="fieldsTop">
+                        <div class="fieldImage">
+                            <label>Choisir une image</label>
+                            {{ form_widget(form.image) }}
+                        </div>
 
-                <div>
-                    <label>Prix</label>
-                    {{ form_widget(form.price) }}
-                </div>
+                        <div class="field">
+                            <label>Nom</label>
+                            {{ form_widget(form.name) }}
+                        </div>
 
-                <div>
-                    <label>Choisir une image</label>
-                    {{ form_widget(form.image) }}
-                </div>
+                        <div class="field">
+                            <label>Prix</label>
+                            {{ form_widget(form.price) }}
+                        </div>
 
-                <div>
-                    <label>Mettre en avant le produit ?</label>
-                    {{ form_widget(form.highlight) }}
-                </div>
+                        <div class="field">
+                            <label for="stock_XS">Stock XS</label>
+                            <input type="number" name="stocks[0]" id="stock_XS" value="0">
+                        </div>
+                        <div class="field">
+                            <label for="stock_S">Stock S</label>
+                            <input type="number" name="stocks[1]" id="stock_S" value="0">
+                        </div>
+                        <div class="field">
+                            <label for="stock_M">Stock M</label>
+                            <input type="number" name="stocks[2]" id="stock_M" value="0">
+                        </div>
+                        <div class="field">
+                            <label for="stock_L">Stock L</label>
+                            <input type="number" name="stocks[3]" id="stock_L" value="0">
+                        </div>
+                        <div class="field">
+                            <label for="stock_XL">Stock XL</label>
+                            <input type="number" name="stocks[4]" id="stock_XL" value="0">
+                        </div>
+                    </div>
 
-                <div>
-                    <label for="stock_XS">Stock XS</label>
-                    <input type="number" name="stocks[0]" id="stock_XS" value="0">
-                </div>
-                <div>
-                    <label for="stock_S">Stock S</label>
-                    <input type="number" name="stocks[1]" id="stock_S" value="0">
-                </div>
-                <div>
-                    <label for="stock_M">Stock M</label>
-                    <input type="number" name="stocks[2]" id="stock_M" value="0">
-                </div>
-                <div>
-                    <label for="stock_L">Stock L</label>
-                    <input type="number" name="stocks[3]" id="stock_L" value="0">
-                </div>
-                <div>
-                    <label for="stock_XL">Stock XL</label>
-                    <input type="number" name="stocks[4]" id="stock_XL" value="0">
-                </div>
+                    <div class="fieldsBottom">
+                        <div class="fieldHighlight">
+                            <label>Mettre en avant le produit ?</label>
+                            {{ form_widget(form.highlight) }}
+                        </div>                    
 
-                <button type="submit">Ajouter</button>
-            {{ form_end(form) }}
-        </section>
+                        <button type="submit">Ajouter</button>
+                    </div>
+                
+                {{ form_end(form) }}
+            </form>
+        </div>
 
 
-        <section>
-            <h2>Liste des produits</h2>
-            <div class="products">
-                {% for product in products %}
-                    <form method="post" action="{{ path('admin_delete', {id: product.id}) }}">
-                        <div class="product">
-                            <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
-                            
-                            <input type="text" name="name" value="{{ product.name }}" />
-                            <input type="number" name="price" value="{{ product.price }}" />
-                            
+        <div>
+            {% for product in products %}
+                <form method="post" action="{{ path('admin_delete', {id: product.id}) }}" class="formUpdate">
+                    <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
+                    
+                    <div class="fields">
+                        <div class="fieldsTop">
+                            <div class="field">
+                                <label>Nom</label>
+                                <input type="text" name="name" value="{{ product.name }}" />
+                            </div>
+
+                            <div class="field">
+                                <label>Prix</label>
+                                <input type="number" name="price" value="{{ product.price }}" />
+                            </div>
+                                
                             {% for stock in product.stocks %}
-                                <div>
-                                    <label>{{ stock.size }}</label>
+                                <div class="field">
+                                    <label>Stock {{ stock.size }}</label>
                                     <input type="number" name="stock_{{ stock.size }}" value="{{ stock.quantity }}" />
                                 </div>
                             {% endfor %}
-                            
-                            <label>
-                                Mettre en avant
+                        </div>
+
+                        <div class="fieldsBottom">
+                            <div class="fieldHighlight">
+                                <label>Mettre en avant</label>
                                 <input type="checkbox" name="highlight" {% if product.highlight %}checked{% endif %}>
-                            </label>
-                            
+                            </div>
+                                    
                             <button type="submit" name="_method" value="delete">Supprimer</button>
                             <button type="submit" formaction="{{ path('admin_update', {id: product.id}) }}">Modifier</button>
                         </div>
-                    </form>
-                {% endfor %}
-            </div>
-        </section>
+                    </div>
+                </form>
+            {% endfor %}
+        </div>
     </main>
 
     <footer>
-        <p>Informations de la société</p>
+        <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>
+        <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
+        <a href="mailto:stubborn@blabla.com">stubborn@blabla.com</a>
     </footer>
 {% endblock %}
