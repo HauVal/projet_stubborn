@@ -13,18 +13,18 @@
         </div>
 
         <nav>
+            <a href="/" class="select">Accueil</a>
             {% if app.user %}
-                <a href="/" class="select">Accueil</a></li>
-                <a href="/products">Boutique</a></li>
-                <a href="/cart">Panier</a></li>
+                <a href="/products">Boutique</a>
+                <a href="/cart">Panier</a>
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="/admin">Back-office</a>
                 {% endif %}
-                <a href="/logout" class="logout">Se déconnecter</a></li>
+                <a href="/logout" class="logout">Se déconnecter</a>
+                
             {% else %}
-                <a href="/">Accueil</a></li>
-                <a href="/login">Se connecter</a></li>
-                <a href="/register">S'inscrire</a></li>
+                <a href="/register">S'inscrire</a>
+                <a href="/login">Se connecter</a>
             {% endif %}
         </nav>
     </header>
