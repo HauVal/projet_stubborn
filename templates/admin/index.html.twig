@@ -17,63 +17,65 @@
         </div>
 
         <nav>
-            <a href="/product">Boutique</a></li>
+            <a href="/products">Boutique</a></li>
             <a href="/logout">Se déconnecter</a></li> 
         </nav>
     </header>
 
     <main>
         <div>
-            <form class="formAdd">
+            <form  method="post" enctype="multipart/form-data" class="formAdd" class="formAdd">
                 {{ form_start(form) }}
 
-                    <div class="fieldsTop">
-                        <div class="fieldImage">
-                            <label>Choisir une image</label>
-                            {{ form_widget(form.image) }}
-                        </div>
-
-                        <div class="field">
-                            <label>Nom</label>
-                            {{ form_widget(form.name) }}
-                        </div>
-
-                        <div class="field">
-                            <label>Prix</label>
-                            {{ form_widget(form.price) }}
-                        </div>
-
-                        <div class="field">
-                            <label for="stock_XS">Stock XS</label>
-                            <input type="number" name="stocks[0]" id="stock_XS" value="0">
-                        </div>
-                        <div class="field">
-                            <label for="stock_S">Stock S</label>
-                            <input type="number" name="stocks[1]" id="stock_S" value="0">
-                        </div>
-                        <div class="field">
-                            <label for="stock_M">Stock M</label>
-                            <input type="number" name="stocks[2]" id="stock_M" value="0">
-                        </div>
-                        <div class="field">
-                            <label for="stock_L">Stock L</label>
-                            <input type="number" name="stocks[3]" id="stock_L" value="0">
-                        </div>
-                        <div class="field">
-                            <label for="stock_XL">Stock XL</label>
-                            <input type="number" name="stocks[4]" id="stock_XL" value="0">
-                        </div>
+                    <div class="fieldImage">
+                        <label>Choisir une image</label>
+                        {{ form_widget(form.image) }}
                     </div>
 
-                    <div class="fieldsBottom">
-                        <div class="fieldHighlight">
-                            <label>Mettre en avant le produit ?</label>
-                            {{ form_widget(form.highlight) }}
-                        </div>                    
+                    <div class="fields">
+                            <div class="fieldsTop">
+                                <div class="field">
+                                    <label>Nom</label>
+                                    {{ form_widget(form.name) }}
+                                </div>
 
-                        <button type="submit">Ajouter</button>
+                                <div class="field">
+                                    <label>Prix</label>
+                                    {{ form_widget(form.price) }}
+                                </div>
+
+                                <div class="field">
+                                    <label for="stock_XS">Stock XS</label>
+                                    <input type="number" name="stocks[0]" id="stock_XS" value="0">
+                                </div>
+                                <div class="field">
+                                    <label for="stock_S">Stock S</label>
+                                    <input type="number" name="stocks[1]" id="stock_S" value="0">
+                                </div>
+                                <div class="field">
+                                    <label for="stock_M">Stock M</label>
+                                    <input type="number" name="stocks[2]" id="stock_M" value="0">
+                                </div>
+                                <div class="field">
+                                    <label for="stock_L">Stock L</label>
+                                    <input type="number" name="stocks[3]" id="stock_L" value="0">
+                                </div>
+                                <div class="field">
+                                    <label for="stock_XL">Stock XL</label>
+                                    <input type="number" name="stocks[4]" id="stock_XL" value="0">
+                                </div>
+                            </div>
+                    
+
+                        <div class="fieldsBottom">
+                            <div class="fieldHighlight">
+                                <label>Mettre en avant</label>
+                                {{ form_widget(form.highlight) }}
+                            </div>                    
+
+                            <button type="submit">Ajouter</button>
+                        </div>
                     </div>
-                
                 {{ form_end(form) }}
             </form>
         </div>
@@ -81,7 +83,7 @@
 
         <div>
             {% for product in products %}
-                <form method="post" action="{{ path('admin_delete', {id: product.id}) }}" class="formUpdate">
+                <form method="post" action="{{ path('admin_delete', {id: product.id}) }}" enctype="multipart/form-data" class="formUpdate">
                     <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
                     
                     <div class="fields">
@@ -105,12 +107,21 @@
                         </div>
 
                         <div class="fieldsBottom">
+
+                            <div class="fieldImage">
+                                <label>Image</label>
+                                <input type="file" name="image" />
+                            </div>
+
                             <div class="fieldHighlight">
                                 <label>Mettre en avant</label>
                                 <input type="checkbox" name="highlight" {% if product.highlight %}checked{% endif %}>
                             </div>
                                     
-                            <button type="submit" name="_method" value="delete">Supprimer</button>
+                        
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                            <button type="submit">Supprimer</button>
+
                             <button type="submit" formaction="{{ path('admin_update', {id: product.id}) }}">Modifier</button>
                         </div>
                     </div>

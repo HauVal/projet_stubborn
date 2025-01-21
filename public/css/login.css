@@ -1,0 +1,62 @@
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    margin: 100px;
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.connexion {
+    border-bottom-style: solid;
+    border-color: rgba(0, 174, 255, 0.295);
+    margin: 5px 10px;
+}
+
+.loginForm {
+    margin: 10px 10px 0px 10px;
+    padding-right: 30px;
+    display: flex;
+    flex-direction: column;
+    border-bottom-style: solid;
+    border-color: rgba(0, 174, 255, 0.295);
+}
+
+.loginForm form {
+    display: flex;
+    flex-direction: column;
+}
+
+.field {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.loginForm button {
+    background-color: rgba(15, 165, 240, 0.826);
+    font-weight: 900;
+    color: white;
+    padding: 5px 2px;
+    border-style: solid;
+    border-radius: 5px;
+}
+
+.bottomForm {
+    margin: 10px;
+}
+
+.bottomForm a {
+    background-color: rgba(15, 165, 240, 0.826);
+    font-weight: 900;
+    color: white;
+    padding: 5px 5px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: black;
+}

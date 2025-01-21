@@ -31,13 +31,20 @@
 
     <main>
         {% for product in products %}
-            <div class="product">
+            <div class="products">
                 <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
-                <h2>{{ product.name }}</h2>
-                <p>Prix : {{ product.price }} €</p>
-                {% if app.user %}
-                    <a href="{{ path('product_show', {'id': product.id}) }}">Voir</a>
-                {% endif %}
+                <div class="infos">
+                    <div>
+                        <h2>{{ product.name }}</h2>
+                        <p>Prix : {{ product.price }} €</p>
+                    </div>
+
+                    <div>
+                        {% if app.user %}
+                            <a href="{{ path('product_show', {'id': product.id}) }}" class="viewProduct">VOIR</a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         {% endfor %}
     </main>

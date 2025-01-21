@@ -13,18 +13,19 @@ main {
     margin: 20px;
     border-style: solid;
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
 }
 
 .formUpdate {
     margin: 20px;
     border-style: solid;
     display: flex;
+    justify-content: space-around;
 }
 
 .fieldsTop {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .fieldsBottom {
@@ -34,7 +35,7 @@ main {
 }
 
 .fieldImage {
-    width: 200px;
+    width: 300px;
     margin: 15px;
     display: flex;
     flex-direction: column;
@@ -54,7 +55,7 @@ main {
 }
 
 .fieldHighlight {
-    margin-right: 20px;
+    margin-right: 40px;
     display: flex;
     align-items: center;
 }
@@ -63,6 +64,13 @@ form img {
     width: 200px;
 }
 
-button {
-    margin: 10px;
+.fieldsBottom button {
+    margin: 20px 10px 30px 0px;
+    padding: 10px 75px;
+    border-style: solid;
+    border-radius: 5px;
+}
+
+.fieldsBottom button:hover {
+    cursor: pointer;
 }
