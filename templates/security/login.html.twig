@@ -3,57 +3,61 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-<div class="container">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 
     <header>
         <div class="logo">
             <img src="{{ asset('images/Logo.png') }}" alt="Logo">
             <p>Don't compromise on your look</p>
         </div>
-        
+            
         <nav>
             <a href="/">Accueil</a>
-            {% if app.user %}
-                <span>Bonjour, {{ app.user.name }} !</span>
-                <a href="/logout">Se déconnecter</a>
-            {% else %}
-                <a href="/login">Se connecter</a>
-                <a href="/register">S'inscrire</a>
-            {% endif %}
+            <a href="/register">S'inscrire</a>
+            <a href="/login" class="select">Se connecter</a>
         </nav>
     </header>
 
-    <div style="text-align: center; margin-top: 50px;">
+    <main>
+        <div class="login">
+            <div class="connexion">
+                <p>Se connecter</p>
+            </div>
+            
+            <div class="loginForm">
+                <form method="post" action="{{ path('login') }}">
+                    {% if error %}
+                        <div style="color: red;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
 
-        <h1>Se connecter</h1>
-        
-        <form method="post" action="{{ path('login') }}">
-            {% if error %}
-                <div style="color: red;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <div class="field">
+                        <label for="username">Nom utilisateur :</label>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}" required>
+                    </div>
 
-            <label for="username">Nom utilisateur :</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" required>
+                    <div class="field">
+                        <label for="password">Mot de passe :</label>
+                        <input type="password" id="password" name="_password" required>
+                    </div>
 
-            <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="_password" required>
+                    <button type="submit">Se connecter</button>
+                </form>
 
-            <button type="submit" style="background-color: blue; color: white;">Se connecter</button>
-        </form>
+                <a href="/">Mot de passe oublié</a>
+            </div>
 
-        <div style="margin-top: 20px;">
-            <a href="/">Retour à l'accueil</a><br>
-            <a href="/register">Pas encore inscrit ?</a>
+            <div class="bottomForm">
+                <p>Pas encore inscrit ?</p>
+                <a href="/register">Créer un compte</a>
+            </div>
         </div>
-    </div>
+    </main>
 
     <footer>
         <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>
         <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
         <a href="mailto:stubborn@blabla.com">stubborn@blabla.com</a>
     </footer>
-
-</div>
 {% endblock %}

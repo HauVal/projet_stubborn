@@ -13,7 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 #[Route('/admin', name: 'admin_')]
 class AdminController extends AbstractController
@@ -32,7 +33,6 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            // Créez des stocks par défaut pour chaque taille
             foreach (['XS', 'S', 'M', 'L', 'XL'] as $size) {
                 $stock = new ProductStock();
                 $stock->setSize($size);
@@ -45,18 +45,16 @@ class AdminController extends AbstractController
         /** @var UploadedFile $imageFile */
         $imageFile = $form->get('image')->getData();
 
+        $imageFile = $form->get('image')->getData();
+
         if ($imageFile) {
-            // Créez un nom unique pour l'image
             $newFilename = uniqid() . '.' . $imageFile->guessExtension();
 
             try {
-                // Déplacez l'image dans le répertoire public/imagesProduits
                 $imageFile->move(
                     $this->getParameter('product_images_directory'),
                     $newFilename
                 );
-
-                // Sauvegardez le nom du fichier dans l'entité
                 $product->setImage($newFilename);
             } catch (FileException $e) {
                 $this->addFlash('error', 'Une erreur est survenue lors de l\'upload de l\'image.');
@@ -88,6 +86,33 @@ class AdminController extends AbstractController
         $product->setName($data['name']);
         $product->setPrice($data['price']);
         $product->setHighlight(isset($data['highlight']));
+
+        $imageFile = $request->files->get('image'); // Récupère le fichier "image"
+
+        if ($imageFile) {
+            // Supprimez l'ancienne image si elle existe
+            $oldImagePath = $this->getParameter('product_images_directory') . '/' . $product->getImage();
+            if ($product->getImage() && file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+        
+            // Génération d'un nom unique pour la nouvelle image
+            $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+        
+            try {
+                // Déplacement de l'image dans le dossier public/imagesProduits
+                $imageFile->move(
+                    $this->getParameter('product_images_directory'),
+                    $newFilename
+                );
+        
+                // Mise à jour du champ "image" de l'entité
+                $product->setImage($newFilename);
+            } catch (FileException $e) {
+                $this->addFlash('error', 'Une erreur est survenue lors de l\'enregistrement de l\'image.');
+                return $this->redirectToRoute('admin_index');
+            }
+        }
     
         foreach ($product->getStocks() as $stock) {
             if (isset($data['stock_' . $stock->getSize()])) {
@@ -102,8 +127,28 @@ class AdminController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'delete', methods: ['POST'])]
-    public function delete(Product $product, EntityManagerInterface $entityManager): Response
-    {
+    public function delete(
+        Product $product,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        CsrfTokenManagerInterface $csrfTokenManager
+    ): Response {
+        $submittedToken = $request->request->get('_token');
+
+        // Vérifiez le token CSRF
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('delete' . $product->getId(), $submittedToken))) {
+            $this->addFlash('error', 'Action non autorisée.');
+            return $this->redirectToRoute('admin_index');
+        }
+
+        // Récupérez le chemin absolu de l'image associée au produit
+        $imagePath = $this->getParameter('product_images_directory') . '/' . $product->getImage();
+    
+        // Vérifiez si le fichier existe, puis supprimez-le
+        if ($product->getImage() && file_exists($imagePath)) {
+            unlink($imagePath); // Supprime le fichier
+        }
+
         $entityManager->remove($product);
         $entityManager->flush();
 

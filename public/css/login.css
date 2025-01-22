@@ -1,0 +1,86 @@
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    margin: 100px;
+    border-style: solid;
+    border-width: thin;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.connexion {
+    border-bottom-style: solid;
+    border-color: rgba(0, 174, 255, 0.295);
+    margin: 5px 10px;
+}
+
+.loginForm, .registerForm {
+    margin: 10px 10px 0px 10px;
+    padding-right: 30px;
+
+
+    display: flex;
+    flex-direction: column;
+    border-bottom-style: solid;
+    border-color: rgba(0, 174, 255, 0.295);
+}
+
+.registerForm {
+    padding-bottom: 20px;
+}
+
+.loginForm form, .registerForm form {
+    display: flex;
+    flex-direction: column;
+}
+
+.field {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.deliveryField {
+    margin-bottom: 70px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.loginForm button, .registerForm button {
+    background-color: rgba(15, 165, 240, 0.826);
+    font-weight: 900;
+    color: white;
+    padding: 5px 2px;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: thin;
+}
+
+.loginForm button:hover, .registerForm button:hover {
+    cursor: pointer;
+}
+
+.bottomForm, .registerBottom {
+    margin: 10px 10px 30px 10px;
+}
+
+.bottomForm a, .registerBottom a {
+    background-color: rgba(15, 165, 240, 0.826);
+    font-weight: 900;
+    color: white;
+    padding: 5px;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: black;
+    border-width: thin;
+}
+
+.registerBottom a {
+    margin: 0px;
+}

@@ -3,7 +3,7 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-<div class="container">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 
     <header>
         <div class="logo">
@@ -13,46 +13,58 @@
         
         <nav>
             <a href="/">Accueil</a>
-            {% if app.user %}
-                <span>Bonjour, {{ app.user.name }} !</span>
-                <a href="/logout">Se déconnecter</a>
-            {% else %}
-                <a href="/login">Se connecter</a>
-                <a href="/register">S'inscrire</a>
-            {% endif %}
+            <a href="/register" class="select">S'inscrire</a>
+            <a href="/login">Se connecter</a>
         </nav>
     </header>
 
-    <div style="text-align: center; margin-top: 50px;">
-        <h1>Inscription</h1>
-        <form method="post" action="{{ path('app_register') }}">
-            {{ form_start(registrationForm) }}
+    <main>
+        <div class="login">
+            <div class="connexion">
+                <p>S'inscrire</p>
+            </div>
 
-            <label for="registration_form_name">Nom utilisateur :</label>
-            {{ form_widget(registrationForm.name) }}
+            <div class="registerForm">
+                <form method="post" action="{{ path('app_register') }}">
+                    {{ form_start(registrationForm) }}
+                    <div class="field">
+                        <label for="registration_form_name">Nom utilisateur :</label>
+                        {{ form_widget(registrationForm.name) }}
+                    </div>
 
-            <label for="registration_form_email">Adresse mail :</label>
-            {{ form_widget(registrationForm.email) }}
+                    <div class="field">
+                        <label for="registration_form_email">Adresse mail :</label>
+                        {{ form_widget(registrationForm.email) }}
+                    </div>
 
-            <label for="registration_form_deliveryAddress">Adresse de livraison :</label>
-            {{ form_widget(registrationForm.deliveryAddress) }}
+                    <div class="deliveryField">
+                        <label for="registration_form_deliveryAddress">Adresse de livraison :</label>
+                        {{ form_widget(registrationForm.deliveryAddress) }}
+                    </div>
 
-            <label for="registration_form_plainPassword">Mot de passe :</label>
-            {{ form_widget(registrationForm.plainPassword.first) }}
+                    <div class="field">
+                        <label for="registration_form_plainPassword">Mot de passe :</label>
+                        {{ form_widget(registrationForm.plainPassword.first) }}
+                    </div>
 
-            <label for="registration_form_plainPassword_confirmation">Confirmation de mot de passe :</label>
-            {{ form_widget(registrationForm.plainPassword.second) }}
+                    <div class="field">
+                        <label for="registration_form_plainPassword_confirmation">Confirmation de mot de passe :</label>
+                        {{ form_widget(registrationForm.plainPassword.second) }}
+                    </div>
 
-            <button type="submit" style="background-color: blue; color: white;">S'inscrire</button>
+                    <button type="submit">Créer un compte</button>
 
-            {{ form_end(registrationForm) }}
-            
-        </form>
+                    {{ form_end(registrationForm) }}
+                    
+                </form>
+            </div>
 
-        <div style="margin-top: 20px;">
-            <a href="{{ path('login') }}">Déjà inscrit ?</a>
+            <div class="registerBottom">
+                <p>Déjà inscrit ?</p>
+                <a href="/login">Se connecter</a>
+            </div>
         </div>
-    </div>
+    </main>
 
     <footer>
         <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>

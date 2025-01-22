@@ -1,0 +1,50 @@
+main {
+    display: flex;
+    justify-content: center;
+}
+
+.product {
+    border-style: solid;
+    margin: 50px;
+    display: flex;
+}
+
+.product img {
+    width: 500px;
+}
+
+form {
+    margin: 30px 200px 0 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.display {
+
+    display: flex;
+}
+
+.name {
+    padding: 10px 50px 50px 0;
+}
+
+.size {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center
+}
+
+.size label, .size select {
+    border-style: solid;
+    border-width: thin;
+    padding: 5px 10px;
+}
+
+form button {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0 10px;
+}

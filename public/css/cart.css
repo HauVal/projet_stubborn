@@ -1,0 +1,93 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+main img {
+    width: 150px;
+}
+
+.productList {
+    display: flex;
+    flex-direction: column;
+}
+
+.product {
+    margin: 20px;
+    padding: 25px;
+    border-style: solid;
+    display: flex;
+    justify-content: space-around;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.infos {
+    display: flex;
+}
+
+.name {
+    margin: 0px 100px 0px 50px;
+}
+
+.price {
+    margin: 0px 100px 0px 100px;
+}
+
+.size {
+    margin: 0px 50px 0px 100px;
+}
+
+.display button {
+    padding: 10px 30px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.display button:hover {
+    cursor: pointer;
+}
+
+.bottom {
+    display: flex;
+    justify-content: end;
+    align-items: baseline;
+}
+
+.bottom p {
+    border-style: solid;
+    padding: 10px 40px;
+    margin: 10px;
+}
+
+.bottomButton {
+    display: flex;
+    flex-direction: column;
+}
+
+.bottomButton button {
+    padding: 12px;
+    background-color: rgba(255, 13, 0, 0.242);
+    border-radius: 5px;
+}
+
+.bottomButton button:hover {
+    cursor: pointer;
+}
+
+.bottomButton a {
+    color: black;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-style: solid;
+    border-color: black;
+    border-radius: 5px;
+    background-color: rgba(17, 167, 17, 0.194);
+}

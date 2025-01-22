@@ -11,7 +11,7 @@ final class HomeController extends AbstractController{
     #[Route('/', name: 'home')]
     public function index(ProductRepository $productRepository): Response
     {
-        $highlightedProducts = $productRepository->findBy(['highlight' => true], null, 3);
+        $highlightedProducts = $productRepository->findBy(['highlight' => true], null);
 
         return $this->render('home/index.html.twig', [
             'products' => $highlightedProducts,

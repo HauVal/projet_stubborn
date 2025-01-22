@@ -3,40 +3,55 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
+
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+
     <header>
+        <div class="logo">
+            <img src="{{ asset('images/Logo.png') }}" alt="Logo">
+            <p>Don't compromise on your look</p>
+        </div>
+
         <nav>
-            <ul>
-                {% if app.user %}
-                    <li><a href="/">Accueil</a></li>
-                    <li><a href="/products">Boutique</a></li>
-                    <li><a href="/cart">Panier</a></li>
-                    <li><a href="/logout">Se déconnecter</a></li>
-                {% else %}
-                    <li><a href="/">Accueil</a></li>
-                    <li><a href="/login">Se connecter</a></li>
-                    <li><a href="/register">S'inscrire</a></li>
+            <a href="/" class="select">Accueil</a>
+            {% if app.user %}
+                <a href="/products">Boutique</a>
+                <a href="/cart">Panier</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="/admin">Back-office</a>
                 {% endif %}
-            </ul>
+                <a href="/logout" class="logout">Se déconnecter</a>
+                
+            {% else %}
+                <a href="/register">S'inscrire</a>
+                <a href="/login">Se connecter</a>
+            {% endif %}
         </nav>
     </header>
 
     <main>
-        <h1>Nos produits mis en avant</h1>
-        <div class="products">
-            {% for product in products %}
-                <div class="product">
-                    <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
-                    <h2>{{ product.name }}</h2>
-                    <p>Prix : {{ product.price }} €</p>
-                    {% if app.user %}
-                        <a href="{{ path('product_show', {'id': product.id}) }}">Voir</a>
-                    {% endif %}
+        {% for product in products %}
+            <div class="products">
+                <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
+                <div class="infos">
+                    <div>
+                        <h2>{{ product.name }}</h2>
+                        <p>Prix : {{ product.price }} €</p>
+                    </div>
+
+                    <div>
+                        {% if app.user %}
+                            <a href="{{ path('product_show', {'id': product.id}) }}" class="viewProduct">VOIR</a>
+                        {% endif %}
+                    </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     </main>
 
     <footer>
-        <p>Informations de la société</p>
+        <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>
+        <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
+        <a href="mailto:stubborn@blabla.com">stubborn@blabla.com</a>
     </footer>
 {% endblock %}

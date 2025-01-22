@@ -3,56 +3,58 @@
 {% block title %}Boutique - Liste des produits{% endblock %}
 
 {% block body %}
-<div class="container">
+    <link rel="stylesheet" href="{{ asset('css/products.css') }}">
 
-    <header>
-        <div class="logo">
-            <img src="{{ asset('images/Logo.png') }}" alt="Logo">
-            <p>Don't compromise on your look</p>
-        </div>
-        
-        <nav>
-            <a href="/">Accueil</a>
-            <a href="/products" class="select">Boutique</a>
-            <a href="/cart">Panier</a>
-            <a href="/logout" class="logout">Se déconnecter</a>
-        </nav>
-    </header>
+    <body>
+        <header>
+            <div class="logo">
+                <img src="{{ asset('images/Logo.png') }}" alt="Logo">
+                <p>Don't compromise on your look</p>
+            </div>
+            
+            <nav>
+                <a href="/">Accueil</a>
+                <a href="/products" class="select">Boutique</a>
+                <a href="/cart">Panier</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="/admin">Back-office</a>
+                {% endif %}
+                <a href="/logout" class="logout">Se déconnecter</a>
+            </nav>
+        </header>
 
-    <!-- Filtre par fourchette de prix -->
-    <form method="get" action="{{ path('product_list') }}" class="mb-4">
-        <label for="price_range">Fourchette de prix :</label>
-        <select id="price_range" name="price_range" class="form-select" onchange="this.form.submit()">
-            <option value="" {% if priceRange is null %}selected{% endif %}>Toutes</option>
-            <option value="10-29" {% if priceRange == '10-29' %}selected{% endif %}>10 à 29 €</option>
-            <option value="30-35" {% if priceRange == '30-35' %}selected{% endif %}>30 à 35 €</option>
-            <option value="35-50" {% if priceRange == '35-50' %}selected{% endif %}>35 à 50 €</option>
-        </select>
-    </form>
+        <main>
+            <form method="get" action="{{ path('product_list') }}">
+                <label for="price_range">Fourchette de prix :</label>
+                <select id="price_range" name="price_range" class="form-select" onchange="this.form.submit()">
+                    <option value="" {% if priceRange is null %}selected{% endif %}>Toutes</option>
+                    <option value="10-29" {% if priceRange == '10-29' %}selected{% endif %}>10 à 29 €</option>
+                    <option value="30-35" {% if priceRange == '30-35' %}selected{% endif %}>30 à 35 €</option>
+                    <option value="35-50" {% if priceRange == '35-50' %}selected{% endif %}>35 à 50 €</option>
+                </select>
+            </form>
 
-    <!-- Liste des produits -->
-    <div class="row">
-        {% for product in products %}
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <img src="{{ asset('imagesProduits/' ~ product.image) }}" class="card-img-top" alt="{{ product.name }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.price|number_format(2, ',', ' ') }} €</p>
-                        <a href="{{ path('product_show', { id: product.id }) }}" class="btn btn-primary">Voir</a>
+            {% for product in products %}
+                <div class="product">
+                    <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
+                    <div class="bottomProduct">
+                        <div>
+                            <h5>{{ product.name }}</h5>
+                            <p>{{ product.price|number_format(2, ',', ' ') }} €</p>
+                        </div>
+
+                        <a href="{{ path('product_show', { id: product.id }) }}">Voir</a>
                     </div>
                 </div>
-            </div>
-        {% else %}
-            <p>Aucun produit trouvé pour cette fourchette de prix.</p>
-        {% endfor %}
-    </div>
+            {% else %}
+                <p>Aucun produit trouvé pour cette fourchette de prix.</p>
+            {% endfor %}
+        </main>
 
-    <footer>
-        <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>
-        <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
-        <a href="mailto:stubborn@blabla.com">stubborn@blabla.com</a>
-    </footer>
-
-</div>
+        <footer>
+            <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>
+            <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
+            <a href="mailto:stubborn@blabla.com">stubborn@blabla.com</a>
+        </footer>
+    </body>
 {% endblock %}

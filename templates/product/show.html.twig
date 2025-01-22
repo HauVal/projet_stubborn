@@ -3,35 +3,59 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block body %}
-<div class="container">
-    <a href="{{ path('product_list') }}" class="btn btn-secondary mb-3">Retour à la boutique</a>
 
-    <div class="row">
-        <!-- Image du produit -->
-        <div class="col-md-6">
-            <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}" class="img-fluid">
+    <link rel="stylesheet" href="{{ asset('css/product.css') }}">
+
+    <header>
+        <div class="logo">
+            <img src="{{ asset('images/Logo.png') }}" alt="Logo">
+            <p>Don't compromise on your look</p>
         </div>
+            
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/products">Boutique</a>
+            <a href="/cart">Panier</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="/admin">Back-office</a>
+            {% endif %}
+            <a href="/logout" class="logout">Se déconnecter</a>
+        </nav>
+    </header>
 
-        <!-- Informations du produit et formulaire -->
-        <div class="col-md-6">
-            <h1>{{ product.name }}</h1>
-            <p>Prix : {{ product.price|number_format(2, ',', ' ') }} €</p>
+    <main>
+        <div class="product">
+            <img src="{{ asset('imagesProduits/' ~ product.image) }}" alt="{{ product.name }}">
 
-            <!-- Formulaire pour sélectionner une taille -->
             <form method="post" action="{{ path('cart_add', { id: product.id }) }}">
-                <label for="size">Taille :</label>
-                <select id="size" name="size" class="form-select mb-3" required>
-                    {% for stock in stocks %}
-                        <option value="{{ stock.size }}" {% if stock.quantity == 0 %}disabled{% endif %}>
-                            {{ stock.size }} {% if stock.quantity == 0 %}(Indisponible){% endif %}
-                        </option>
-                    {% endfor %}
-                </select>
+                <div class="display">
+                    <div class="name">
+                        <h1>{{ product.name }}</h1>
 
-                <!-- Bouton pour ajouter au panier -->
-                <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+                        <p>Prix : {{ product.price|number_format(2, ',', ' ') }} €</p>
+                    </div>
+
+                    <div class="size">
+                        <label for="size">Taille</label>
+                        <select id="size" name="size" required>
+                            {% for stock in stocks %}
+                                <option value="{{ stock.size }}" {% if stock.quantity == 0 %}disabled{% endif %}>
+                                    {{ stock.size }} {% if stock.quantity == 0 %}(Indisponible){% endif %}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit">AJOUTER AU PANIER</button>
             </form>
+                
         </div>
-    </div>
-</div>
+    </main>
+
+    <footer>
+        <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>
+        <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
+        <a href="mailto:stubborn@blabla.com">stubborn@blabla.com</a>
+    </footer>
 {% endblock %}
