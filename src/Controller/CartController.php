@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Service\StripeService;
 use App\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class CartController extends AbstractController{
     #[Route('/cart', name: 'cart_show')]
@@ -67,12 +69,59 @@ final class CartController extends AbstractController{
     
         if (isset($cart[$index])) {
             unset($cart[$index]);
-            $cart = array_values($cart); // Réindexation
+            $cart = array_values($cart);
             $session->set('cart', $cart);
         }
     
         $this->addFlash('success', 'Article retiré du panier.');
     
+        return $this->redirectToRoute('cart_show');
+    }
+
+    #[Route('/cart/checkout', name: 'cart_checkout', methods: ['POST'])]
+    public function checkout(SessionInterface $session, StripeService $stripeService): Response
+    {
+        $cart = $session->get('cart', []);
+        if (empty($cart)) {
+            $this->addFlash('error', 'Votre panier est vide.');
+            return $this->redirectToRoute('cart_show');
+        }
+    
+        // Préparation des articles pour Stripe Checkout
+        $lineItems = [];
+        foreach ($cart as $item) {
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => $item['name'],
+                    ],
+                    'unit_amount' => $item['price'] * 100, // Convertir en centimes
+                ],
+                'quantity' => 1,
+            ];
+        }
+    
+        // URL de succès et d'annulation
+        $successUrl = $this->generateUrl('cart_success', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $cancelUrl = $this->generateUrl('cart_show', [], UrlGeneratorInterface::ABSOLUTE_URL);
+    
+        try {
+            $session = $stripeService->createCheckoutSession($lineItems, $successUrl, $cancelUrl);
+            return $this->redirect($session->url, 303);
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+            return $this->redirectToRoute('cart_show');
+        }
+    }
+    
+    #[Route('/cart/success', name: 'cart_success')]
+    public function success(SessionInterface $session): Response
+    {
+        // Vider le panier après le paiement réussi
+        $session->remove('cart');
+    
+        $this->addFlash('success', 'Votre commande a été réglée avec succès !');
         return $this->redirectToRoute('cart_show');
     }
 }

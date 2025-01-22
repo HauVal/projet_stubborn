@@ -48,3 +48,7 @@ form button {
     padding: 10px;
     margin: 0 10px;
 }
+
+form button:hover {
+    cursor: pointer;
+}
