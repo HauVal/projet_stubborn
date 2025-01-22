@@ -16,6 +16,9 @@
                 <a href="/">Accueil</a>
                 <a href="/products" class="select">Boutique</a>
                 <a href="/cart">Panier</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="/admin">Back-office</a>
+                {% endif %}
                 <a href="/logout" class="logout">Se déconnecter</a>
             </nav>
         </header>
