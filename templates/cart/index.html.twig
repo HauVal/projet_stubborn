@@ -3,43 +3,79 @@
 {% block title %}Panier{% endblock %}
 
 {% block body %}
-<h1>Votre panier</h1>
 
-{% if cart is empty %}
-    <p>Votre panier est vide.</p>
-    <a href="/products" class="btn btn-primary">Continuer mes achats</a>
-{% else %}
-    <table>
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>Taille</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for index, item in cart %}
-                <tr>
-                    <td><img src="{{ asset('imagesProduits/' ~ item.image) }}" alt="{{ item.name }}" width="100"></td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.price }} €</td>
-                    <td>{{ item.size }}</td>
-                    <td>
-                        <form action="{{ path('cart_remove', { index: index }) }}" method="POST">
-                            <button type="submit" class="btn btn-danger">Retirer du panier</button>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <link rel="stylesheet" href="{{ asset('css/cart.css') }}">
 
-    <div>
-        <p>Total : <strong>{{ total }} €</strong></p>
-        <button class="btn btn-success">Finaliser ma commande</button>
-        <a href="/products" class="btn btn-primary">Continuer mes achats</a>
-    </div>
-{% endif %}
+    <header>
+        <div class="logo">
+            <img src="{{ asset('images/Logo.png') }}" alt="Logo">
+            <p>Don't compromise on your look</p>
+        </div>
+            
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/products">Boutique</a>
+            <a href="/cart" class="select">Panier</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="/admin">Back-office</a>
+            {% endif %}
+            <a href="/logout" class="logout">Se déconnecter</a>
+        </nav>
+    </header>
+
+    <main>
+        {% if cart is empty %}
+            <div class="bottomButton">
+                <p>Votre panier est vide.</p>
+                <a href="/products">CONTINUER MES ACHATS</a>
+            </div>
+
+        {% else %}
+            <div class="productsList">
+                {% for index, item in cart %}
+                    <div class="product">
+                        <img src="{{ asset('imagesProduits/' ~ item.image) }}" alt="{{ item.name }}">
+
+                        <div class="display">
+                            <div class="infos">
+                                <div class="name">
+                                    <p style="font-weight: 900">Nom</p>
+                                    <p>{{ item.name }}<p>
+                                </div>
+
+                                <div class="price">
+                                    <p style="font-weight: 900">Prix</p>
+                                    <p>{{ item.price }} €<p>
+                                </div>
+
+                                <div class="size">
+                                    <p style="font-weight: 900">Taille<p>
+                                    <p>{{ item.size }}<p>
+                                </div>
+                            </div> 
+
+                            <form action="{{ path('cart_remove', { index: index }) }}" method="POST">
+                                <button type="submit" class="btn btn-danger">RETIRER DU PANIER</button>
+                            </form> 
+                        </div>
+                    </div>         
+                {% endfor %}
+
+                <div class="bottom">
+                    <p>TOTAL : <strong>{{ total }} €</strong></p>
+
+                    <div class="bottomButton">
+                        <button>FINALISER MA COMMANDE</button>
+                        <a href="/products">CONTINUER MES ACHATS</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p><strong>Stubborn</strong> est une entreprise de vente de sweat-shirts.</p>
+        <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
+        <a href="mailto:stubborn@blabla.com">stubborn@blabla.com</a>
+    </footer>
 {% endblock %}
